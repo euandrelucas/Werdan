@@ -6,7 +6,7 @@ const UserModel = require('../../schemas/userSchema.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('registrar')
-		.setDescription('Registre a sua empresa!'),
+		.setDescription('Registre a sua própia empresa!'),
 	async execute(interaction) {
 		const doc = await UserModel.findOne({ id: interaction.user.id });
 		if (doc) {
