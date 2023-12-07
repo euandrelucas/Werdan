@@ -17,7 +17,7 @@ module.exports = {
 				.setTitle(`${interaction.client.emoji.business} ${business.name}`)
 				.setDescription(`**Nome:** ${business.name}\n**CNPJ:** ${business.cnpj}\n**Banco:** **${business.bank}**\n**Capital:** ${business.totalIncome.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Dividendos:** ${business.dividends.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Funcionários:** ${business.employees.length.toLocaleString('pt-BR')}`)
 				.setThumbnail(interaction.client.user.displayAvatarURL({ dynamic: true }))
-				.setColor('GREEN')
+				.setColor('Purple')
 				.setFooter({
 					text: 'OBS: Nenhuma das informações acima é verdadeira, são todas gerados com base em um algoritmo para fins de simulação!',
 					iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }),
