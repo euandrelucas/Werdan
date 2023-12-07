@@ -1,0 +1,37 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  deploy:
+    name: "Deploy to production"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Setup ssh
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+          cat >>~/.ssh/config << END
+          Host prod
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+      - name: Cloning repository
+        run: ssh prod 'cd /home/adg/Werdan && git fetch && git reset --hard origin/main'
+      - name: Building container
+        run: ssh prod 'bash -i -c "cd /home/adg/Werdan && docker build . -t werdan/bot"'
+      - name: Stopping container
+        run: ssh prod 'bash -i -c "docker rm --force werdan"'
+      - name: Starting container
+        run: ssh prod 'bash -i -c "docker run --hostname goten -d --restart always --name werdan werdan/bot"'
