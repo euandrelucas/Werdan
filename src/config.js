@@ -7,4 +7,7 @@ module.exports = {
 	database: {
 		uri: process.env.MONGO_URI,
 	},
+	logs: {
+		error: '1182420307861057537',
+	},
 };

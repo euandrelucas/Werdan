@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks */
-const { SlashCommandBuilder, ModalBuilder, ButtonBuilder, ActionRowBuilder, EmbedBuilder, ButtonStyle, ComponentType, TextInputBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextInputStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const UserModel = require('../../schemas/userSchema.js');
 
 module.exports = {
@@ -15,8 +15,8 @@ module.exports = {
 			const business = doc.businesses[0];
 			const embed = new EmbedBuilder()
 				.setTitle(`${interaction.client.emoji.business} ${business.name}`)
-				.setDescription(`**Nome:** ${business.name}\n**CNPJ:** ${business.cnpj}\n**Banco:** **${business.bank}**\n**Capital:** ${business.totalIncome.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Dividendos:** ${business.dividends.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Funcionários:** ${business.employees.length.toLocaleString('pt-BR')}`)
-				.setThumbnail(interaction.client.user.displayAvatarURL({ dynamic: true }))
+				.setDescription(`**Nome:** ${business.name}\n**CNPJ:** ${business.cnpj}\n**Banco:** ${business.bank}\n**Capital:** ${business.totalIncome.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Dividendos:** ${business.dividends.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n**Funcionários:** ${business.employees.length.toLocaleString('pt-BR')}`)
+				.setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
 				.setColor('Purple')
 				.setFooter({
 					text: 'OBS: Nenhuma das informações acima é verdadeira, são todas gerados com base em um algoritmo para fins de simulação!',

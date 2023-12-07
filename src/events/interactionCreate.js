@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const config = require('../config.js');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -23,6 +24,8 @@ module.exports = {
 			else {
 				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 			}
+			const errorChannel = interaction.client.channels.cache.get(config.logs.error);
+			errorChannel.send(`\`\`\`js\n${error}\`\`\``);
 		}
 	},
 };
